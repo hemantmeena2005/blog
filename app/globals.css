@@ -20,7 +20,57 @@
 }
 
 body {
-  /* background: var(--background); */
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ✅ Add this for proper list rendering from Quill */
+[data-list="ordered"] {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+}
+
+[data-list="bullet"] {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+
+li[data-list] {
+  margin-bottom: 0.25rem;
+}
+
+h1 {
+  font-size: 2.25rem; /* Tailwind's text-4xl */
+  font-weight: 800;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+h2 {
+  font-size: 1.875rem; /* Tailwind's text-3xl */
+  font-weight: 700;
+  margin-bottom: 1rem;
+  margin-top: 1.25rem;
+}
+
+h3 {
+  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+ol,
+ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+article {
+  color: black;
 }

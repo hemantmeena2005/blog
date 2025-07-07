@@ -14,7 +14,6 @@ async function getPost(slug) {
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug);
   if (!post) return {};
-  // Strip HTML tags for description
   const desc = post.content.replace(/<[^>]+>/g, "").slice(0, 160);
   return {
     title: post.title,
@@ -37,14 +36,28 @@ export default async function PostPage({ params }) {
   const { slug } = params;
   const post = await getPost(slug);
   if (!post) return notFound();
+
   return (
     <div className="max-w-5xl mx-auto p-0">
       <div className="bg-white rounded shadow p-8 mb-6 mt-4 w-full">
-        <Link href="/" className="text-blue-600 hover:underline text-sm mb-4 inline-block">← Back to Home</Link>
-        <h1 className="text-4xl font-extrabold mb-2 text-black leading-tight">{post.title}</h1>
-        <div className="text-gray-700 text-xs mb-6">Published: {new Date(post.createdAt).toLocaleString()}</div>
-        <article className="prose max-w-none text-black text-lg" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <Link
+          href="/"
+          className="text-blue-600 hover:underline text-sm mb-4 inline-block"
+        >
+          ← Back to Home
+        </Link>
+        <h1 className="text-4xl font-extrabold mb-2 text-black leading-tight">
+          {post.title}
+        </h1>
+        <div className="text-gray-700 text-xs mb-6">
+          Published: {new Date(post.createdAt).toLocaleString()}
+        </div>
+
+        {/* ✅ Use Tailwind Typography + cleaned HTML */}
+        <article dangerouslySetInnerHTML={{ __html: post.content }} />
+
+
       </div>
     </div>
   );
-} 
+}

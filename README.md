@@ -1,37 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Truly IAS Blog
 
-## Getting Started
+A modern, minimal full-stack blog platform built with Next.js 15, Tailwind CSS, MongoDB (Mongoose), and a rich text editor. Features both public and admin flows, with a simple client-side password-protected admin dashboard for demo purposes.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Modern UI**: Clean, card-based design with gradient headers and high-contrast minimalism.
+- **Rich Text Editor**: Create and edit posts with formatting (React Quill New).
+- **SEO**: Dynamic meta tags for public posts.
+- **Admin Dashboard**: Create, edit, delete, and list posts. Protected by a demo password.
+- **Public Blog**: View posts by slug, with styled content and responsive layout.
+- **Client-side Admin Auth**: Simple password protection for demo (not for production use).
+
+## Quick Start
+
+### 1. Clone & Install
+```sh
+git clone <your-repo-url>
+cd blogweb
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure MongoDB
+Create a `.env.local` file in the root:
+```
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<dbname>?retryWrites=true&w=majority
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run the App
+```sh
+npm run dev
+```
+Visit [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Admin Login
+- Go to `/admin` or `/admin/create` or `/admin/edit/[slug]`
+- **Password:** `admin` (see login hint on the form)
 
-## Learn More
+## Folder Structure
+- `app/` — Next.js app directory (pages, routes, UI)
+- `lib/` — Shared libraries (admin auth context, db, etc)
+- `public/` — Static assets
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
+- Next.js 15 (App Router)
+- React 18+
+- Tailwind CSS 4 + Typography plugin
+- MongoDB + Mongoose
+- React Quill New (rich text editor)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Security Note
+> **This project uses a client-side, hardcoded password for the admin dashboard for demo purposes only.**
+> Do NOT use this approach in production. For real authentication, use NextAuth.js, JWT, or another secure method.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# blog
+## License
+MIT

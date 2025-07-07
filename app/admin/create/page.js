@@ -1,5 +1,11 @@
 "use client";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import "react-quill-new/dist/quill.snow.css";
+import { useAdminAuth } from "../../../lib/AdminAuthContext";
+import Link from "next/link";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 function slugify(text) {
   return text
@@ -12,11 +18,48 @@ function slugify(text) {
 }
 
 export default function CreatePostPage() {
+  const { isAdmin, login, logout, error } = useAdminAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [slug, setSlug] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [password, setPassword] = useState("");
+
+  if (!isAdmin) {
+    return (
+      <div className="max-w-sm mx-auto mt-20 bg-white p-8 rounded-xl shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h2>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            login(password);
+          }}
+        >
+          <div className="mb-6">
+            <label htmlFor="admin-password" className="block text-gray-700 text-sm font-medium mb-2">Password</label>
+            <input
+              type="password"
+              id="admin-password"
+              className="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              placeholder="Enter admin password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   const handleTitleChange = (e) => {
     const value = e.target.value;
@@ -52,7 +95,13 @@ export default function CreatePostPage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-black">Create Post</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold text-black">Create New Post</h1>
+        <div className="flex gap-2">
+          <Link href="/admin" className="text-blue-600 hover:underline text-sm">← Back to Dashboard</Link>
+          <button onClick={logout} className="text-red-600 hover:underline text-sm ml-2">Logout</button>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-medium mb-1 text-black">Title</label>
@@ -66,12 +115,9 @@ export default function CreatePostPage() {
         </div>
         <div>
           <label className="block font-medium mb-1 text-black">Content</label>
-          <textarea
-            className="w-full border border-black text-black rounded px-3 py-2 min-h-[120px] bg-white"
-            value={content}
-            onChange={e => setContent(e.target.value)}
-            required
-          />
+          <div className="w-full border border-black text-black rounded bg-white min-h-[120px]">
+            <ReactQuill value={content} onChange={setContent} theme="snow" />
+          </div>
         </div>
         <div>
           <label className="block font-medium mb-1 text-black">Slug</label>
