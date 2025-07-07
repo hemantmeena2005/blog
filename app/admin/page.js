@@ -108,7 +108,7 @@ export default function AdminDashboard() {
               >
                 {deleting === post.slug ? "Deleting..." : "Delete"}
               </button>
-              <Link href={`/posts/${post.slug}`} className="px-3 py-1 rounded bg-green-100 text-green-700 hover:bg-green-200 transition" target="_blank" rel="noopener noreferrer">View</Link>
+              <Link href={`/posts/${post.slug}`} className="px-3 py-1 rounded bg-green-100 text-green-700 hover:bg-green-200 transition">View</Link>
             </div>
           </div>
         ))}

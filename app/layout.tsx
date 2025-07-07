@@ -2,12 +2,22 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { AdminAuthProvider } from "../lib/AdminAuthContext";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+export const metadata = {
+  title: "Truly IAS Blog",
+  description: "A modern, minimal blog for UPSC and current affairs.",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <title>Truly IAS Blog</title>
+        <meta name="description" content="A modern, minimal blog for UPSC and current affairs." />
+      </head>
       <body className={`${inter.variable} font-sans bg-white min-h-screen flex flex-col`} style={{ fontFamily: 'Inter, sans-serif' }}>
         <AdminAuthProvider>
           <header className="bg-gradient-to-r from-blue-600 to-purple-700 shadow-lg py-4">
